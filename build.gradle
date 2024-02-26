@@ -19,6 +19,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.projectlombok:lombok:1.18.22'
+	implementation 'com.google.guava:guava:28.1-jre'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
