@@ -12,7 +12,7 @@ public enum ApplicationUserPermission {
         this.permissions = permission;
     }
 
-    public String getPermission() {
+    public String getPermissions() {
         return permissions;
     }
 }

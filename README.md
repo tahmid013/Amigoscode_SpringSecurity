@@ -87,3 +87,12 @@ User permission:
   apis are workable
 - in ApplicationSecurityConfig add 
 -     .csrf().disable()   
+
+## 7. Permission based authentication
+
+- user permission
+  - user1: read, write
+  - user2: only read
+- two ways
+  - ant-matchers
+  - annotations
