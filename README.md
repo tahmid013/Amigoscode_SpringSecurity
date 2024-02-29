@@ -80,3 +80,10 @@ User permission:
       public String getPermission() {
       return permissions;
       }
+
+## 6. Management APIs with csrf disabled
+
+- csrf is disabled temporary for ensuring the student management (admin)
+  apis are workable
+- in ApplicationSecurityConfig add 
+-     .csrf().disable()   
