@@ -114,4 +114,12 @@ User permission:
       .antMatchers(HttpMethod.POST, "/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
       .antMatchers(HttpMethod.PUT, "/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
       .antMatchers(HttpMethod.GET, "/management/api/**").hasAnyRole(ADMIN_TRAINEE.name(), ADMIN.name())
-                  
+       
+## 9. PreAuthorize annotation in controller
+
+- instead of antmatchers we can define preAuthorize annotation in controller layer before each api.
+- 
+- For Read
+-     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN_TRAINEE')")
+- For Write
+-     @PreAuthorize("hasAuthority('course:write')")
