@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import static com.example.amigoscode.security.ApplicationUserPermission.*;
+import static com.example.amigoscode.security.ApplicationUserRole.*;
 
 @Configuration
 @EnableWebSecurity
@@ -30,10 +31,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // todo: remove it later
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers(HttpMethod.DELETE, "management/api/**").hasAnyAuthority(COURSE_READ.name())
-                .antMatchers(HttpMethod.POST, "management/api/**").hasAnyAuthority(COURSE_WRITE.name())
-                .antMatchers(HttpMethod.PUT, "management/api/**").hasAnyAuthority(STUDENT_READ.name())
-                .antMatchers(HttpMethod.GET, "management/api/**").hasAnyRole(ApplicationUserRole.ADMIN_TRAINEE.name())
+                .antMatchers("/api/**").hasRole(STUDENT.name())
+                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
+                .antMatchers(HttpMethod.POST, "/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
+                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAnyAuthority(COURSE_WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/management/api/**").hasAnyRole(ADMIN_TRAINEE.name(), ADMIN.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -46,25 +48,30 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder.encode("1234"))
-                .roles(ApplicationUserRole.STUDENT.name())
+//                .roles(ApplicationUserRole.STUDENT.name())
+                .authorities(STUDENT.getGrantedAuthority())
                 .build();
 
         UserDetails user2 = User.builder()
                 .username("user2")
                 .password(passwordEncoder.encode("1234"))
-                .roles(ApplicationUserRole.STUDENT.name())
+//                .roles(STUDENT.name())
+                .authorities(STUDENT.getGrantedAuthority())
                 .build();
 
         UserDetails admin = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("1234"))
-                .roles(ApplicationUserRole.ADMIN.name())
+//                .roles(ApplicationUserRole.ADMIN.name())
+                .authorities(ADMIN.getGrantedAuthority())
                 .build();
         UserDetails admin_trainee = User.builder()
-                .username("admin_trainee")
+                .username("trainee")
                 .password(passwordEncoder.encode("1234"))
-                .roles(ApplicationUserRole.ADMIN_TRAINEE.name())
+//                .roles(ApplicationUserRole.ADMIN_TRAINEE.name())
+                .authorities(ADMIN_TRAINEE.getGrantedAuthority())
                 .build();
+
 
         return new InMemoryUserDetailsManager(user1, user2, admin, admin_trainee);
     }
